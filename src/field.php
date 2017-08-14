@@ -162,11 +162,11 @@ class Field {
 	 * Render form field: Start.
 	 *
 	 * @since 0.1.0
-	 * @access private
+	 * @access protected
 	 *
 	 * @return string Form field html.
 	 */
-	private function render_start(): string {
+	protected function render_start(): string {
 		$html = '<p>';
 		
 		if ( 'radio' != $this->type ) {
@@ -188,11 +188,11 @@ class Field {
 	 * Render form field: End.
 	 *
 	 * @since 0.1.0
-	 * @access private
+	 * @access protected
 	 *
 	 * @return string Form field html.
 	 */
-	private function render_end(): string {
+	protected function render_end(): string {
 		$html = '';
 		
 		if ( 'radio' != $this->type ) {
