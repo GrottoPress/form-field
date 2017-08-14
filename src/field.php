@@ -362,9 +362,9 @@ class Field {
 	 * @since 0.1.0
 	 * @access protected
 	 */
-	protected function set_attributes( array $args ): bool {
+	protected function set_attributes( array $args ) {
 		if ( ! $args ) {
-			return false;
+			return;
 		}
 
 		unset( $args['meta']['id'] );
@@ -377,8 +377,6 @@ class Field {
 		foreach ( $vars as $key => $value ) {
 			$this->$key = $args[ $key ] ?? '';
 		}
-
-		return true;
 	}
 
 	/**
@@ -387,7 +385,7 @@ class Field {
 	 * @since 0.1.0
 	 * @access protected
 	 */
-	protected function sanitize_attributes(): bool {
+	protected function sanitize_attributes() {
 		$this->id = S( $this->id )->slugify();
 		$this->name = S( $this->name )->toAscii()->regexReplace( '[^\w\d\[\]\-\_]', '' );
 		$this->type = S( $this->type )->slugify();
@@ -399,8 +397,6 @@ class Field {
 
 		$this->label_pos = ( \in_array( $this->label_pos, [ 'before_field', 'after_field' ] )
 			? $this->label_pos : 'after_field' );
-
-		return true;
 	}
 
 	/**
@@ -418,10 +414,8 @@ class Field {
 		
 		$meta_string = '';
 
-		\array_walk( $this->meta, function ( string $value, string $key ) use ( &$meta_string ): bool {
+		\array_walk( $this->meta, function ( string $value, string $key ) use ( &$meta_string ) {
 			$meta_string .= S( $key )->slugify() . '="' . $this->escape->attr( $value ) . '" ';
-
-			return true;
 		} );
 
 		return trim( $meta_string );
