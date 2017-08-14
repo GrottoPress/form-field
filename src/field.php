@@ -149,7 +149,7 @@ class Field {
 	 * @return string Form field html.
 	 */
 	public function render(): string {
-		$field = ( string ) S( $this->type )->prepend( 'render_' );
+		$field = ( string ) $this->type->prepend( 'render_' );
 		
 		if ( \is_callable( [ $this, $field ] ) ) {
 			return $this->render_start() . $this->$field() . $this->render_end();
@@ -282,6 +282,18 @@ class Field {
 	 */
 	protected function render_checkbox(): string {
 		return '<input type="checkbox" ' . $this->meta_string() . ' id="' . $this->escape->attr( $this->id ) . '" name="' . $this->escape->attr( $this->name ) . '" value="1" ' . $this->checked( 1, $this->value ) . ' />';
+	}
+
+	/**
+	 * Render submit button.
+	 *
+	 * @since 0.1.0
+	 * @access protected
+	 *
+	 * @return string Form field html.
+	 */
+	protected function render_submit(): string {
+		return '<button type="submit" ' . $this->meta_string() . ' id="' . $this->escape->attr( $this->id ) . '" name="' . $this->escape->attr( $this->name ) . '">' . $this->escape->attr( $this->value ) . '</button>';
 	}
 
 	/**

@@ -297,4 +297,25 @@ class Field_Test extends TestCase {
         $this->assertSame( 'Yes', $options->item( 0 )->childNodes->item( 0 )->ownerDocument->saveHTML( $options->item( 0 )->childNodes->item( 0 ) ) );
         $this->assertSame( 'No', $options->item( 1 )->childNodes->item( 0 )->ownerDocument->saveHTML( $options->item( 1 )->childNodes->item( 0 ) ) );
     }
+
+    public function test_submit_button_render() {
+        $field = new Field( [
+            'id' => 'field-id',
+            'name' => 'field-name',
+            'type' => 'submit',
+            'value' => 'Save',
+            'meta' => [ 'class' => 'my-class' ],
+        ] );
+
+        $this->dom->loadHTML( $field->render() );
+        $ps = $this->dom->getElementsByTagName( 'p' );
+        $buttons = $this->dom->getElementsByTagName( 'button' );
+
+        $this->assertCount( 1, $ps );
+        $this->assertCount( 1, $buttons );
+        $this->assertSame( 'field-id', $buttons->item( 0 )->attributes->getNamedItem( 'id' )->value );
+        $this->assertSame( 'field-name', $buttons->item( 0 )->attributes->getNamedItem( 'name' )->value );
+        $this->assertSame( 'submit', $buttons->item( 0 )->attributes->getNamedItem( 'type' )->value );
+        $this->assertSame( 'my-class', $buttons->item( 0 )->attributes->getNamedItem( 'class' )->value );
+    }
 }
