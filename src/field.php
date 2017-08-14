@@ -388,7 +388,7 @@ class Field {
 	protected function sanitize_attributes() {
 		$this->id = S( $this->id )->slugify();
 		$this->name = S( $this->name )->toAscii()->regexReplace( '[^\w\d\[\]\-\_]', '' );
-		$this->type = S( $this->type )->slugify();
+		$this->type = S( $this->type )->slugify( '_' );
 		$this->meta = ( array ) $this->meta;
 		$this->choices = ( array ) $this->choices;
 
