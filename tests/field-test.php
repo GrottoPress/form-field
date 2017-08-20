@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Pagination Tests
+ * Field Tests
  *
- * @package GrottoPress\WordPress\Form
- * @subpackage GrottoPress\WordPress\Form\Tests
+ * @package GrottoPress\WordPress\Form\Tests
  *
  * @since 0.1.0
  *
@@ -20,7 +19,7 @@ use GrottoPress\Form\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Page test case
+ * Field Tests
  *
  * @since 0.1.0
  */
