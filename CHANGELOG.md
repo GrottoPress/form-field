@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased - 0.1.1 - 
 ### Added
 - Added a submit button field.
+- Added ability to specify wrap HTML tag for a field.
 
 ### Changed
 - Slugify field `type` with underscores intead of dashes.
