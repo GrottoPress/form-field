@@ -324,7 +324,7 @@ class Field {
 			
 			$html .= '<input type="radio" ' . $this->meta_string() . ' id="' . $this->escape->attr( $id )
 				. '" name="' . $this->escape->attr( $this->name ) . '" value="' . $this->escape->attr( $value ) . '" '
-				. $this->checked( $value, $this->escape->attr( $this->value ) ) . ' />';
+				. $this->checked( $value, $this->value ) . ' />';
 				
 			if ( 'after_field' == $this->label_pos ) {
 				$html .= ' <label for="' . $this->escape->attr( $id ) . '">' . $label . '</label>';
@@ -458,7 +458,7 @@ class Field {
 	 * @return string 'selected' html attribute
 	 */
 	protected function selected( $a, $b ): string {
-		return ( $a == $b ? 'selected="selected"' : '' );
+		return ( $this->equiv( $a, $b ) ? 'selected="selected"' : '' );
 	}
 
 	/**
@@ -470,6 +470,32 @@ class Field {
 	 * @return string 'checked' html attribute
 	 */
 	protected function checked( $a, $b ): string {
-		return ( $a == $b ? 'checked="checked"' : '' );
+		return ( $this->equiv( $a, $b ) ? 'checked="checked"' : '' );
+	}
+
+	/**
+	 * Are two values equivalent.
+	 *
+	 * For the purposes of this class, equivalence is defined as:
+	 * - When the two variables have equal values;
+	 * - When the two variables have identical values;
+	 * - When one variable's value is contained in the other variable's value,
+	 * - where one of the variables is a set.
+	 *
+	 * @since 0.1.0
+	 * @access protected
+	 *
+	 * @return string 'selected' html attribute
+	 */
+	protected function equiv( $a, $b ): bool {
+		if ( \is_array( $a ) && is_scalar( $b ) ) {
+			return \in_array( $b, $a );
+		}
+
+		if ( \is_array( $b ) && is_scalar( $a ) ) {
+			return \in_array( $a, $b );
+		}
+
+		return ( $a == $b );
 	}
 }
