@@ -39,15 +39,16 @@ class Field_Test extends TestCase {
             'type' => 'text',
             'value' => 'Some text',
             'label' => 'Field label',
+            'wrap' => 'div',
             'meta' => [ 'class' => 'my-class', 'placeholder' => 'Nothing' ],
         ] );
 
         $this->dom->loadHTML( $field->render() );
-        $ps = $this->dom->getElementsByTagName( 'p' );
+        $divs = $this->dom->getElementsByTagName( 'div' );
         $inputs = $this->dom->getElementsByTagName( 'input' );
         $labels = $this->dom->getElementsByTagName( 'label' );
 
-        $this->assertCount( 1, $ps );
+        $this->assertCount( 1, $divs );
         $this->assertCount( 1, $inputs );
         $this->assertCount( 1, $labels );
         $this->assertSame( 'field-id', $inputs->item( 0 )->attributes->getNamedItem( 'id' )->value );

@@ -26,6 +26,16 @@ use function Stringy\create as S;
  */
 class Field {
 	/**
+     * Wrap tag
+	 *
+	 * @since 0.1.0
+	 * @access protected
+	 * 
+	 * @var string $wrap  Wrapper HTML tag.
+	 */
+	protected $wrap;
+
+	/**
      * Field ID
 	 *
 	 * @since 0.1.0
@@ -167,7 +177,11 @@ class Field {
 	 * @return string Form field html.
 	 */
 	protected function render_start(): string {
-		$html = '<p>';
+		$html = '';
+
+		if ( $this->wrap ) {
+			$html .= '<' . $this->wrap . '>';
+		}
 		
 		if ( 'radio' != $this->type ) {
 			if ( 'before_field' == $this->label_pos && $this->label ) {
@@ -207,7 +221,9 @@ class Field {
 			}
 		}
 		
-		$html .= '</p>';
+		if ( $this->wrap ) {
+			$html .= '</' . $this->wrap . '>';
+		}
 		
 		return $html;
 	}
@@ -398,6 +414,7 @@ class Field {
 	 * @access protected
 	 */
 	protected function sanitize_attributes() {
+		$this->wrap = ( $this->wrap ? ( string ) S( $this->wrap )->slugify( '_' ) : 'p' );
 		$this->id = S( $this->id )->slugify();
 		$this->name = S( $this->name )->toAscii()->regexReplace( '[^\w\d\[\]\-\_]', '' );
 		$this->type = S( $this->type )->slugify( '_' );
