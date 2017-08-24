@@ -26,6 +26,16 @@ use function Stringy\create as S;
  */
 class Field {
 	/**
+     * Wrap tag
+	 *
+	 * @since 0.1.0
+	 * @access protected
+	 * 
+	 * @var string $wrap  Wrapper HTML tag.
+	 */
+	protected $wrap;
+
+	/**
      * Field ID
 	 *
 	 * @since 0.1.0
@@ -149,7 +159,7 @@ class Field {
 	 * @return string Form field html.
 	 */
 	public function render(): string {
-		$field = ( string ) S( $this->type )->prepend( 'render_' );
+		$field = ( string ) $this->type->prepend( 'render_' );
 		
 		if ( \is_callable( [ $this, $field ] ) ) {
 			return $this->render_start() . $this->$field() . $this->render_end();
@@ -162,12 +172,16 @@ class Field {
 	 * Render form field: Start.
 	 *
 	 * @since 0.1.0
-	 * @access private
+	 * @access protected
 	 *
 	 * @return string Form field html.
 	 */
-	private function render_start(): string {
-		$html = '<p>';
+	protected function render_start(): string {
+		$html = '';
+
+		if ( $this->wrap ) {
+			$html .= '<' . $this->wrap . '>';
+		}
 		
 		if ( 'radio' != $this->type ) {
 			if ( 'before_field' == $this->label_pos && $this->label ) {
@@ -188,11 +202,11 @@ class Field {
 	 * Render form field: End.
 	 *
 	 * @since 0.1.0
-	 * @access private
+	 * @access protected
 	 *
 	 * @return string Form field html.
 	 */
-	private function render_end(): string {
+	protected function render_end(): string {
 		$html = '';
 		
 		if ( 'radio' != $this->type ) {
@@ -207,7 +221,9 @@ class Field {
 			}
 		}
 		
-		$html .= '</p>';
+		if ( $this->wrap ) {
+			$html .= '</' . $this->wrap . '>';
+		}
 		
 		return $html;
 	}
@@ -285,6 +301,18 @@ class Field {
 	}
 
 	/**
+	 * Render submit button.
+	 *
+	 * @since 0.1.0
+	 * @access protected
+	 *
+	 * @return string Form field html.
+	 */
+	protected function render_submit(): string {
+		return '<button type="submit" ' . $this->meta_string() . ' id="' . $this->escape->attr( $this->id ) . '" name="' . $this->escape->attr( $this->name ) . '">' . $this->escape->attr( $this->value ) . '</button>';
+	}
+
+	/**
 	 * Render radio.
 	 *
 	 * @since 0.1.0
@@ -312,7 +340,7 @@ class Field {
 			
 			$html .= '<input type="radio" ' . $this->meta_string() . ' id="' . $this->escape->attr( $id )
 				. '" name="' . $this->escape->attr( $this->name ) . '" value="' . $this->escape->attr( $value ) . '" '
-				. $this->checked( $value, $this->escape->attr( $this->value ) ) . ' />';
+				. $this->checked( $value, $this->value ) . ' />';
 				
 			if ( 'after_field' == $this->label_pos ) {
 				$html .= ' <label for="' . $this->escape->attr( $id ) . '">' . $label . '</label>';
@@ -386,9 +414,10 @@ class Field {
 	 * @access protected
 	 */
 	protected function sanitize_attributes() {
+		$this->wrap = ( $this->wrap ? ( string ) S( $this->wrap )->slugify( '_' ) : 'p' );
 		$this->id = S( $this->id )->slugify();
 		$this->name = S( $this->name )->toAscii()->regexReplace( '[^\w\d\[\]\-\_]', '' );
-		$this->type = S( $this->type )->slugify();
+		$this->type = S( $this->type )->slugify( '_' );
 		$this->meta = ( array ) $this->meta;
 		$this->choices = ( array ) $this->choices;
 
@@ -414,7 +443,7 @@ class Field {
 		
 		$meta_string = '';
 
-		\array_walk( $this->meta, function ( $value, $key ) use ( &$meta_string ) {
+		\array_walk( $this->meta, function ( string $value, string $key ) use ( &$meta_string ) {
 			$meta_string .= S( $key )->slugify() . '="' . $this->escape->attr( $value ) . '" ';
 		} );
 
@@ -446,7 +475,7 @@ class Field {
 	 * @return string 'selected' html attribute
 	 */
 	protected function selected( $a, $b ): string {
-		return ( $a == $b ? 'selected="selected"' : '' );
+		return ( $this->equiv( $a, $b ) ? 'selected="selected"' : '' );
 	}
 
 	/**
@@ -458,6 +487,32 @@ class Field {
 	 * @return string 'checked' html attribute
 	 */
 	protected function checked( $a, $b ): string {
-		return ( $a == $b ? 'checked="checked"' : '' );
+		return ( $this->equiv( $a, $b ) ? 'checked="checked"' : '' );
+	}
+
+	/**
+	 * Are two values equivalent.
+	 *
+	 * For the purposes of this class, equivalence is defined as:
+	 * - When the two variables have equal values;
+	 * - When the two variables have identical values;
+	 * - When one variable's value is contained in the other variable's value,
+	 *   where any one of the variables is a set.
+	 *
+	 * @since 0.1.0
+	 * @access protected
+	 *
+	 * @return string 'selected' html attribute
+	 */
+	protected function equiv( $a, $b ): bool {
+		if ( \is_array( $a ) && is_scalar( $b ) ) {
+			return \in_array( $b, $a );
+		}
+
+		if ( \is_array( $b ) && is_scalar( $a ) ) {
+			return \in_array( $a, $b );
+		}
+
+		return ( $a == $b );
 	}
 }

@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Pagination Tests
+ * Field Tests
  *
- * @package GrottoPress\WordPress\Form
- * @subpackage GrottoPress\WordPress\Form\Tests
+ * @package GrottoPress\WordPress\Form\Tests
  *
  * @since 0.1.0
  *
@@ -20,7 +19,7 @@ use GrottoPress\Form\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Page test case
+ * Field Tests
  *
  * @since 0.1.0
  */
@@ -40,15 +39,16 @@ class Field_Test extends TestCase {
             'type' => 'text',
             'value' => 'Some text',
             'label' => 'Field label',
+            'wrap' => 'div',
             'meta' => [ 'class' => 'my-class', 'placeholder' => 'Nothing' ],
         ] );
 
         $this->dom->loadHTML( $field->render() );
-        $ps = $this->dom->getElementsByTagName( 'p' );
+        $divs = $this->dom->getElementsByTagName( 'div' );
         $inputs = $this->dom->getElementsByTagName( 'input' );
         $labels = $this->dom->getElementsByTagName( 'label' );
 
-        $this->assertCount( 1, $ps );
+        $this->assertCount( 1, $divs );
         $this->assertCount( 1, $inputs );
         $this->assertCount( 1, $labels );
         $this->assertSame( 'field-id', $inputs->item( 0 )->attributes->getNamedItem( 'id' )->value );
@@ -296,5 +296,26 @@ class Field_Test extends TestCase {
 
         $this->assertSame( 'Yes', $options->item( 0 )->childNodes->item( 0 )->ownerDocument->saveHTML( $options->item( 0 )->childNodes->item( 0 ) ) );
         $this->assertSame( 'No', $options->item( 1 )->childNodes->item( 0 )->ownerDocument->saveHTML( $options->item( 1 )->childNodes->item( 0 ) ) );
+    }
+
+    public function test_submit_button_render() {
+        $field = new Field( [
+            'id' => 'field-id',
+            'name' => 'field-name',
+            'type' => 'submit',
+            'value' => 'Save',
+            'meta' => [ 'class' => 'my-class' ],
+        ] );
+
+        $this->dom->loadHTML( $field->render() );
+        $ps = $this->dom->getElementsByTagName( 'p' );
+        $buttons = $this->dom->getElementsByTagName( 'button' );
+
+        $this->assertCount( 1, $ps );
+        $this->assertCount( 1, $buttons );
+        $this->assertSame( 'field-id', $buttons->item( 0 )->attributes->getNamedItem( 'id' )->value );
+        $this->assertSame( 'field-name', $buttons->item( 0 )->attributes->getNamedItem( 'name' )->value );
+        $this->assertSame( 'submit', $buttons->item( 0 )->attributes->getNamedItem( 'type' )->value );
+        $this->assertSame( 'my-class', $buttons->item( 0 )->attributes->getNamedItem( 'class' )->value );
     }
 }
