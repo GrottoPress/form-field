@@ -497,7 +497,7 @@ class Field {
 	 * - When the two variables have equal values;
 	 * - When the two variables have identical values;
 	 * - When one variable's value is contained in the other variable's value,
-	 * - where one of the variables is a set.
+	 *   where any one of the variables is a set.
 	 *
 	 * @since 0.1.0
 	 * @access protected
