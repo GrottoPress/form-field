@@ -8,8 +8,8 @@
  * @package GrottoPress\Form
  * @since 0.1.0
  *
- * @author GrottoPress (https://www.grottopress.com)
- * @author N Atta Kus Adusei (https://twitter.com/akadusei)
+ * @author GrottoPress <info@grottopress.com>
+ * @author N Atta Kus Adusei
  */
 
 declare ( strict_types = 1 );
@@ -138,7 +138,7 @@ class Field {
     /**
 	 * Constructor
 	 *
-	 * @var	array $args Field arguments supplied as associative array
+	 * @param	array $args Field arguments supplied as associative array
 	 *
 	 * @since 0.1.0
 	 * @access public
@@ -385,7 +385,7 @@ class Field {
 	/**
 	 * Set attributes
 	 *
-	 * @var array $args	Arguments supplied to this object.
+	 * @param array $args	Arguments supplied to this object.
 	 *
 	 * @since 0.1.0
 	 * @access protected
