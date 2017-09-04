@@ -391,16 +391,14 @@ class Field {
 	 * @access protected
 	 */
 	protected function set_attributes( array $args ) {
+		if ( ! ( $vars = \get_object_vars( $this ) ) ) {
+			return;
+		}
+
 		unset( $args['meta']['id'] );
 		unset( $args['meta']['type'] );
 		unset( $args['meta']['name'] );
 		unset( $args['meta']['value'] );
-
-		if ( ! $args ) {
-			return;
-		}
-
-		$vars = \get_object_vars( $this );
 
 		foreach ( $vars as $key => $value ) {
 			$this->$key = $args[ $key ] ?? '';
