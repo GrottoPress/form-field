@@ -8,11 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added a submit button field.
 - Added ability to specify wrap HTML tag for a field.
-### Changed
-- Enhanced `selected` and `checked` methods.
 
 ### Changed
 - Slugify field `type` with underscores intead of dashes.
+- Enhanced `selected` and `checked` methods.
 
 ## 0.1.0 - 2017-08-13
 ### Added
