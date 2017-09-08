@@ -13,7 +13,7 @@
 
 declare ( strict_types = 1 );
 
-namespace GrottoPress\Form\Tests;
+namespace GrottoPress\Form;
 
 use GrottoPress\Form\Field;
 use PHPUnit\Framework\TestCase;
