@@ -162,7 +162,7 @@ class Field
      */
     public function render(): string
     {
-        $field = (string) $this->type->prepend('render_')->camelize();
+        $field = (string)$this->type->prepend('render_');
         
         if (\is_callable([$this, $field])) {
             return $this->renderStart().$this->$field().$this->renderEnd();
@@ -243,7 +243,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderText(): string
+    protected function render_text(): string
     {
         return '<input type="text" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -259,7 +259,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderEmail(): string
+    protected function render_email(): string
     {
         return '<input type="email" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -275,7 +275,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderNumber(): string
+    protected function render_number(): string
     {
         return '<input type="number" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -291,7 +291,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderUrl(): string
+    protected function render_url(): string
     {
         return '<input type="text" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -307,7 +307,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderTextarea(): string
+    protected function render_textarea(): string
     {
         return '<textarea '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -323,7 +323,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderCheckbox(): string
+    protected function render_checkbox(): string
     {
         return '<input type="checkbox" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -339,7 +339,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderSubmit(): string
+    protected function render_submit(): string
     {
         return '<button type="submit" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -356,7 +356,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderRadio(): string
+    protected function render_radio(): string
     {
         $html = '';
 
@@ -402,7 +402,7 @@ class Field
      *
      * @return string Form field html.
      */
-    protected function renderSelect(): string
+    protected function render_select(): string
     {
         if (!$this->choices) {
             return '';
@@ -416,7 +416,7 @@ class Field
             if (isset($this->meta['multiple'])) {
                 $selected = $this->selected(
                     $value,
-                    (\in_array($value, (array) $this->value) ? $value : '')
+                    (\in_array($value, (array)$this->value) ? $value : '')
                 );
             } else {
                 $selected = $this->selected($value, $this->value);
@@ -464,15 +464,15 @@ class Field
     protected function sanitizeAttributes()
     {
         $this->wrap = ($this->wrap ?
-            (string) S($this->wrap)->slugify('_') : 'p');
+            (string)S($this->wrap)->slugify('_') : 'p');
         $this->id = S($this->id)->slugify();
         $this->name = S($this->name)->toAscii()->regexReplace(
             '[^\w\d\[\]\-\_]',
             ''
         );
         $this->type = S($this->type)->slugify('_');
-        $this->meta = (array) $this->meta;
-        $this->choices = (array) $this->choices;
+        $this->meta = (array)$this->meta;
+        $this->choices = (array)$this->choices;
 
         $this->layout = (\in_array(
             $this->layout,
