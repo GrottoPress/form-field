@@ -564,18 +564,21 @@ class Field
      * - When one variable's value is contained in the other variable's value,
      *   where any one of the variables is a set.
      *
+     * @var mixed $a
+     * @var mixed $b
+     *
      * @since 0.1.0
      * @access protected
      *
-     * @return string 'selected' html attribute
+     * @return bool
      */
     protected function equiv($a, $b): bool
     {
-        if (\is_array($a) && is_scalar($b)) {
+        if (\is_array($a) && \is_scalar($b)) {
             return \in_array($b, $a);
         }
 
-        if (\is_array($b) && is_scalar($a)) {
+        if (\is_array($b) && \is_scalar($a)) {
             return \in_array($a, $b);
         }
 
