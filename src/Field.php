@@ -162,7 +162,7 @@ class Field
      */
     public function render(): string
     {
-        $field = (string)$this->type->prepend('render_');
+        $field = 'render_'.$this->type;
         
         if (\is_callable([$this, $field])) {
             return $this->renderStart().$this->$field().$this->renderEnd();
@@ -187,13 +187,13 @@ class Field
             $html .= '<'.$this->wrap.'>';
         }
 
-        if ('radio' != $this->type) {
+        if ('radio' !== $this->type) {
             if ('before_field' === $this->label_pos && $this->label) {
                 $html .= '<label for="'.$this->escape->attr($this->id).'" '.
                     $this->labelIdString().'>'.$this->label.'</label> ';
             }
 
-            if ('checkbox' != $this->type) {
+            if ('checkbox' !== $this->type) {
                 if ('block' === $this->layout) {
                     $html .= '<br />';
                 }
@@ -215,8 +215,8 @@ class Field
     {
         $html = '';
 
-        if ('radio' != $this->type) {
-            if ('checkbox' != $this->type) {
+        if ('radio' !== $this->type) {
+            if ('checkbox' !== $this->type) {
                 if ('block' === $this->layout) {
                     $html .= '<br />';
                 }
@@ -370,7 +370,7 @@ class Field
         }
 
         foreach ($this->choices as $value => $label) {
-            $id = $this->id.'-'.S($value)->slugify();
+            $id = $this->id.'-'.(string)S($value)->slugify();
 
             if ('before_field' === $this->label_pos) {
                 $html .= '<label for="'.
@@ -463,14 +463,18 @@ class Field
      */
     protected function sanitizeAttributes()
     {
-        $this->wrap = ($this->wrap ?
-            (string)S($this->wrap)->slugify('_') : 'p');
-        $this->id = S($this->id)->slugify();
-        $this->name = S($this->name)->toAscii()->regexReplace(
+        $this->wrap = (
+            $this->wrap
+            ? (string)S($this->wrap)->slugify('_')
+            : 'p'
+        );
+
+        $this->id = (string)S($this->id)->slugify();
+        $this->name = (string)S($this->name)->toAscii()->regexReplace(
             '[^\w\d\[\]\-\_]',
             ''
         );
-        $this->type = S($this->type)->slugify('_');
+        $this->type = (string)S($this->type)->slugify('_');
         $this->meta = (array)$this->meta;
         $this->choices = (array)$this->choices;
 
@@ -505,7 +509,7 @@ class Field
             string $value,
             string $key
         ) use (&$meta_string) {
-            $meta_string .= S($key)->slugify().
+            $meta_string .= (string)S($key)->slugify().
                 '="'.$this->escape->attr($value).'" ';
         });
 

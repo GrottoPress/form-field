@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 0.3.1 - 2017-11-16
 
 ### Changed
-- Converted all `==` checks to the stricter `===`
+- Using strict equality (`===` and `!==`) for checks.
 
 ## 0.3.0 - 2017-09-28
 
