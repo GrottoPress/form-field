@@ -188,13 +188,13 @@ class Field
         }
 
         if ('radio' != $this->type) {
-            if ('before_field' == $this->label_pos && $this->label) {
+            if ('before_field' === $this->label_pos && $this->label) {
                 $html .= '<label for="'.$this->escape->attr($this->id).'" '.
                     $this->labelIdString().'>'.$this->label.'</label> ';
             }
 
             if ('checkbox' != $this->type) {
-                if ('block' == $this->layout) {
+                if ('block' === $this->layout) {
                     $html .= '<br />';
                 }
             }
@@ -217,12 +217,12 @@ class Field
 
         if ('radio' != $this->type) {
             if ('checkbox' != $this->type) {
-                if ('block' == $this->layout) {
+                if ('block' === $this->layout) {
                     $html .= '<br />';
                 }
             }
 
-            if ('after_field' == $this->label_pos && $this->label) {
+            if ('after_field' === $this->label_pos && $this->label) {
                 $html .= ' <label for="'.$this->escape->attr($this->id).'" '.
                     $this->labelIdString().'>'.$this->label.'</label>';
             }
@@ -372,7 +372,7 @@ class Field
         foreach ($this->choices as $value => $label) {
             $id = $this->id.'-'.S($value)->slugify();
 
-            if ('before_field' == $this->label_pos) {
+            if ('before_field' === $this->label_pos) {
                 $html .= '<label for="'.
                     $this->escape->attr($id).'">'.$label.'</label> ';
             }
@@ -383,7 +383,7 @@ class Field
                 '" value="'.$this->escape->attr($value).
                 '" '.$this->checked($value, $this->value).' />';
 
-            if ('after_field' == $this->label_pos) {
+            if ('after_field' === $this->label_pos) {
                 $html .= ' <label for="'.
                     $this->escape->attr($id).'">'.$label.'</label>';
             }
