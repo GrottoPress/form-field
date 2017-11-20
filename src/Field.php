@@ -475,8 +475,8 @@ class Field
             ''
         );
         $this->type = (string)S($this->type)->slugify('_');
-        $this->meta = (array)$this->meta;
-        $this->choices = (array)$this->choices;
+        $this->meta = $this->meta ? (array)$this->meta : [];
+        $this->choices = $this->choices ? (array)$this->choices : [];
 
         $this->layout = (\in_array(
             $this->layout,
@@ -499,11 +499,11 @@ class Field
      */
     protected function metaString(): string
     {
-        if (!$this->meta) {
-            return '';
-        }
-
         $meta_string = '';
+        
+        if (!$this->meta) {
+            return $meta_string;
+        }
 
         \array_walk($this->meta, function (
             string $value,
