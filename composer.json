@@ -14,7 +14,10 @@
           "role": "Developer"
         }
     ],
-    "keywords": [ "html", "form", "field" ],
+    "keywords": [
+        "html",
+        "forms"
+    ],
     "support": {
         "issues": "https://github.com/GrottoPress/form-field/issues",
         "wiki": "https://github.com/GrottoPress/form-field/wiki",
