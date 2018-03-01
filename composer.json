@@ -1,6 +1,6 @@
 {
     "name": "grottopress/form-field",
-    "description": "A library to render HTML form fields.",
+    "description": "Render HTML form fields",
     "license": "MIT",
     "authors": [
         {
