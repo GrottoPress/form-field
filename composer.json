@@ -1,6 +1,6 @@
 {
     "name": "grottopress/form-field",
-    "description": "A library to render HTML form fields.",
+    "description": "Render HTML form fields",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +14,10 @@
           "role": "Developer"
         }
     ],
-    "keywords": [ "html", "form", "field" ],
+    "keywords": [
+        "html",
+        "forms"
+    ],
     "support": {
         "issues": "https://github.com/GrottoPress/form-field/issues",
         "wiki": "https://github.com/GrottoPress/form-field/wiki",
@@ -26,12 +29,23 @@
         "danielstjules/stringy": "^3.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.3"
+        "codeception/codeception": "^2.4"
     },
     "autoload": {
         "psr-4": { "GrottoPress\\Form\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": { "GrottoPress\\Form\\": "tests/" }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "chmod +x ./bin/*"
+        ],
+        "test": [
+            "./vendor/bin/codecept run unit"
+        ],
+        "release": [
+            "./bin/release"
+        ]
     }
 }
