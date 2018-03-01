@@ -1,17 +1,4 @@
 <?php
-
-/**
- * Form Field
- *
- * Renders a field based on given args
- *
- * @package GrottoPress\Form
- * @since 0.1.0
- *
- * @author GrottoPress <info@grottopress.com>
- * @author N Atta Kus Adusei
- */
-
 declare (strict_types = 1);
 
 namespace GrottoPress\Form;
@@ -19,130 +6,71 @@ namespace GrottoPress\Form;
 use Aura\Html\HelperLocatorFactory as Helper;
 use function Stringy\create as S;
 
-/**
- * Form field
- *
- * @since 0.1.0
- */
 class Field
 {
     /**
-     * Wrap tag
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $wrap  Wrapper HTML tag.
+     * @var string $wrap Wrapper HTML tag.
      */
     protected $wrap;
 
     /**
-     * Field ID
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $id Field ID
+     * @var string
      */
     protected $id;
 
     /**
-     * Field name
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $name Field name
+     * @var string
      */
     protected $name;
 
     /**
-     * Field type
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $type Field type
+     * @var string
      */
     protected $type;
 
     /**
-     * Field label
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $label Field label
+     * @var string
      */
     protected $label;
 
     /**
-     * Label position
-     *
-     * @since 0.1.0
-     * @access protected
-     *
      * @var string $label_pos Label position relative to field
      */
     protected $label_pos;
 
     /**
-     * Layout
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $layout Field layout
+     * @var string $layout 'block' or 'inline'
      */
     protected $layout;
 
     /**
      * Field choices (for radio buttons and dropdowns)
      *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var array $choices Field choices.
+     * @var array
      */
     protected $choices;
 
     /**
      * Additional field attributes
      *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var array $meta Additional field attributes.
+     * @var array
      */
     protected $meta;
 
     /**
-     * Field value
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var string $value Field value
+     * @var mixed
      */
     protected $value;
 
     /**
-     * Escaper
+     * HTML Escaper
      *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @var object $escape
+     * @var \Aura\Html\Escaper
      */
-    protected $escape;
-    
+    private $escape;
+
     /**
-     * Constructor
-     *
      * @param array $args Field arguments supplied as associative array
-     *
-     * @since 0.1.0
-     * @access public
      */
     public function __construct(array $args = [])
     {
@@ -152,34 +80,18 @@ class Field
         $this->escape = (new Helper())->newInstance()->escape();
     }
 
-    /**
-     * Render form field.
-     *
-     * @since 0.1.0
-     * @access public
-     *
-     * @return string Form field html.
-     */
     public function render(): string
     {
-        $field = 'render_'.$this->type;
+        $field = "render_{$this->type}";
         
         if (\is_callable([$this, $field])) {
-            return $this->renderStart().$this->$field().$this->renderEnd();
+            return $this->startRender().$this->$field().$this->endRender();
         }
 
         return '';
     }
 
-    /**
-     * Render form field: Start.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
-     */
-    protected function renderStart(): string
+    private function startRender(): string
     {
         $html = '';
 
@@ -203,15 +115,7 @@ class Field
         return $html;
     }
 
-    /**
-     * Render form field: End.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
-     */
-    protected function renderEnd(): string
+    private function endRender(): string
     {
         $html = '';
 
@@ -236,14 +140,9 @@ class Field
     }
 
     /**
-     * Render text field.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'text'
      */
-    protected function render_text(): string
+    private function render_text(): string
     {
         return '<input type="text" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -252,14 +151,9 @@ class Field
     }
 
     /**
-     * Render email field.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'email'
      */
-    protected function render_email(): string
+    private function render_email(): string
     {
         return '<input type="email" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -268,14 +162,9 @@ class Field
     }
 
     /**
-     * Render number field.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'number'
      */
-    protected function render_number(): string
+    private function render_number(): string
     {
         return '<input type="number" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -284,14 +173,9 @@ class Field
     }
 
     /**
-     * Render URL field.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'url'
      */
-    protected function render_url(): string
+    private function render_url(): string
     {
         return '<input type="text" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -300,14 +184,9 @@ class Field
     }
 
     /**
-     * Render textarea.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'textarea'
      */
-    protected function render_textarea(): string
+    private function render_textarea(): string
     {
         return '<textarea '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -316,14 +195,9 @@ class Field
     }
 
     /**
-     * Render checkbox field.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'checkbox'
      */
-    protected function render_checkbox(): string
+    private function render_checkbox(): string
     {
         return '<input type="checkbox" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -332,14 +206,9 @@ class Field
     }
 
     /**
-     * Render submit button.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'submit'
      */
-    protected function render_submit(): string
+    private function render_submit(): string
     {
         return '<button type="submit" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -349,14 +218,9 @@ class Field
     }
 
     /**
-     * Render radio.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'radio'
      */
-    protected function render_radio(): string
+    private function render_radio(): string
     {
         $html = '';
 
@@ -395,14 +259,9 @@ class Field
     }
 
     /**
-     * Render select.
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Form field html.
+     * Called if $this->type === 'select'
      */
-    protected function render_select(): string
+    private function render_select(): string
     {
         if (!$this->choices) {
             return '';
@@ -431,15 +290,7 @@ class Field
         return $html;
     }
 
-    /**
-     * Set attributes
-     *
-     * @param array $args Arguments supplied to this object.
-     *
-     * @since 0.1.0
-     * @access protected
-     */
-    protected function setAttributes(array $args)
+    private function setAttributes(array $args)
     {
         if (!($vars = \get_object_vars($this))) {
             return;
@@ -455,13 +306,7 @@ class Field
         }
     }
 
-    /**
-     * Sanitize attributes
-     *
-     * @since 0.1.0
-     * @access protected
-     */
-    protected function sanitizeAttributes()
+    private function sanitizeAttributes()
     {
         $this->wrap = (
             $this->wrap
@@ -491,13 +336,8 @@ class Field
 
     /**
      * Convert meta to string
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Meta string.
      */
-    protected function metaString(): string
+    private function metaString(): string
     {
         $meta_string = '';
         
@@ -516,15 +356,7 @@ class Field
         return trim($meta_string);
     }
 
-    /**
-     * Label ID
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string Label ID.
-     */
-    protected function labelIdString(): string
+    private function labelIdString(): string
     {
         if (!$this->id) {
             return '';
@@ -536,10 +368,8 @@ class Field
     /**
      * Build 'selected' html attribute for dropdowns
      *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string 'selected' html attribute
+     * @param mixed $a
+     * @param mixed $b
      */
     protected function selected($a, $b): string
     {
@@ -549,10 +379,8 @@ class Field
     /**
      * Build 'checked' html attribute for radio and checkbox
      *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return string 'checked' html attribute
+     * @param mixed $a
+     * @param mixed $b
      */
     protected function checked($a, $b): string
     {
@@ -566,15 +394,10 @@ class Field
      * - When the two variables have equal values;
      * - When the two variables have identical values;
      * - When one variable's value is contained in the other variable's value,
-     *   where any one of the variables is a set.
+     *   where any one of the variables is a set/array.
      *
-     * @var mixed $a
-     * @var mixed $b
-     *
-     * @since 0.1.0
-     * @access protected
-     *
-     * @return bool
+     * @param mixed $a
+     * @param mixed $b
      */
     protected function equiv($a, $b): bool
     {
