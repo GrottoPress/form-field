@@ -91,7 +91,7 @@ class Field
         return '';
     }
 
-    private function startRender(): string
+    protected function startRender(): string
     {
         $html = '';
 
@@ -115,7 +115,7 @@ class Field
         return $html;
     }
 
-    private function endRender(): string
+    protected function endRender(): string
     {
         $html = '';
 
@@ -142,7 +142,7 @@ class Field
     /**
      * Called if $this->type === 'text'
      */
-    private function render_text(): string
+    protected function render_text(): string
     {
         return '<input type="text" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -153,7 +153,7 @@ class Field
     /**
      * Called if $this->type === 'email'
      */
-    private function render_email(): string
+    protected function render_email(): string
     {
         return '<input type="email" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -164,7 +164,7 @@ class Field
     /**
      * Called if $this->type === 'number'
      */
-    private function render_number(): string
+    protected function render_number(): string
     {
         return '<input type="number" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -175,7 +175,7 @@ class Field
     /**
      * Called if $this->type === 'url'
      */
-    private function render_url(): string
+    protected function render_url(): string
     {
         return '<input type="text" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -186,7 +186,7 @@ class Field
     /**
      * Called if $this->type === 'textarea'
      */
-    private function render_textarea(): string
+    protected function render_textarea(): string
     {
         return '<textarea '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -197,7 +197,7 @@ class Field
     /**
      * Called if $this->type === 'checkbox'
      */
-    private function render_checkbox(): string
+    protected function render_checkbox(): string
     {
         return '<input type="checkbox" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -208,7 +208,7 @@ class Field
     /**
      * Called if $this->type === 'submit'
      */
-    private function render_submit(): string
+    protected function render_submit(): string
     {
         return '<button type="submit" '.$this->metaString().
             ' id="'.$this->escape->attr($this->id).
@@ -220,7 +220,7 @@ class Field
     /**
      * Called if $this->type === 'radio'
      */
-    private function render_radio(): string
+    protected function render_radio(): string
     {
         $html = '';
 
@@ -261,7 +261,7 @@ class Field
     /**
      * Called if $this->type === 'select'
      */
-    private function render_select(): string
+    protected function render_select(): string
     {
         if (!$this->choices) {
             return '';
@@ -337,7 +337,7 @@ class Field
     /**
      * Convert meta to string
      */
-    private function metaString(): string
+    protected function metaString(): string
     {
         $meta_string = '';
         
@@ -356,7 +356,7 @@ class Field
         return trim($meta_string);
     }
 
-    private function labelIdString(): string
+    protected function labelIdString(): string
     {
         if (!$this->id) {
             return '';
