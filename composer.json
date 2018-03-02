@@ -32,10 +32,14 @@
         "codeception/codeception": "^2.4"
     },
     "autoload": {
-        "psr-4": { "GrottoPress\\Form\\": "src/" }
+        "psr-4": {
+            "GrottoPress\\Form\\": "src/"
+        }
     },
     "autoload-dev": {
-        "psr-4": { "GrottoPress\\Form\\": "tests/" }
+        "psr-4": {
+            "GrottoPress\\Form\\": "tests/"
+        }
     },
     "scripts": {
         "post-install-cmd": [
