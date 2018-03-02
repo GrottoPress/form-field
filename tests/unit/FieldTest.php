@@ -1,37 +1,17 @@
 <?php
-
-/**
- * Field Tests
- *
- * @package GrottoPress\WordPress\Form\Tests
- *
- * @since 0.1.0
- *
- * @author GrottoPress <info@grottopress.com>
- * @author N Atta Kus Adusei
- */
-
 declare (strict_types = 1);
 
 namespace GrottoPress\Form;
 
-use GrottoPress\Form\Field;
-use PHPUnit\Framework\TestCase;
+use Codeception\Test\Unit;
 
-/**
- * Field Tests
- *
- * @since 0.1.0
- */
-class FieldTest extends TestCase
+class FieldTest extends Unit
 {
     private $dom;
 
-    public function setUp()
+    public function _before()
     {
         $this->dom = new \DOMDocument();
-
-        parent::setUp();
     }
 
     public function testTextFieldRender()

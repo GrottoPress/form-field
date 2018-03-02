@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.4.0 - 2018-03-02
+
+### Added
+- `.security.txt`
+- Set up [travis-ci](https://travis-ci.org/GrottoPress/form-field)
+- Shell script to tag and release new versions
+
+### Removed
+- Redundant doc blocks
+- Replace PHPUnit with Codeception for tests
+
 ## 0.3.2 - 2017-11-20
 
 ### Fixed
