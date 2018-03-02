@@ -99,14 +99,15 @@ class Field
             $html .= '<'.$this->wrap.'>';
         }
 
-        if ('radio' !== $this->type) {
-            if ('before_field' === $this->label_pos && $this->label) {
-                $html .= '<label for="'.$this->escape->attr($this->id).'" '.
-                    $this->labelIdString().'>'.$this->label.'</label> ';
-            }
+        if ('radio' !== $this->type &&
+            'before_field' === $this->label_pos &&
+            $this->label
+        ) {
+            $html .= '<label for="'.$this->escape->attr($this->id).'" '.
+                $this->labelIdString().'>'.$this->label.'</label> ';
 
             if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout && $this->label) {
+                if ('block' === $this->layout) {
                     $html .= '<br />';
                 }
             }
@@ -119,17 +120,18 @@ class Field
     {
         $html = '';
 
-        if ('radio' !== $this->type) {
+        if ('radio' !== $this->type &&
+            'after_field' === $this->label_pos &&
+            $this->label
+        ) {
             if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout && $this->label) {
+                if ('block' === $this->layout) {
                     $html .= '<br />';
                 }
             }
 
-            if ('after_field' === $this->label_pos && $this->label) {
-                $html .= ' <label for="'.$this->escape->attr($this->id).'" '.
-                    $this->labelIdString().'>'.$this->label.'</label>';
-            }
+            $html .= ' <label for="'.$this->escape->attr($this->id).'" '.
+                $this->labelIdString().'>'.$this->label.'</label>';
         }
 
         if ($this->wrap) {
