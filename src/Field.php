@@ -83,7 +83,7 @@ class Field
     public function render(): string
     {
         $field = "render_{$this->type}";
-        
+
         if (\is_callable([$this, $field])) {
             return $this->startRender().$this->$field().$this->endRender();
         }
@@ -290,57 +290,13 @@ class Field
         return $html;
     }
 
-    private function setAttributes(array $args)
-    {
-        if (!($vars = \get_object_vars($this))) {
-            return;
-        }
-
-        unset($args['meta']['id']);
-        unset($args['meta']['type']);
-        unset($args['meta']['name']);
-        unset($args['meta']['value']);
-
-        foreach ($vars as $key => $value) {
-            $this->$key = $args[$key] ?? '';
-        }
-    }
-
-    private function sanitizeAttributes()
-    {
-        $this->wrap = (
-            $this->wrap
-            ? (string)S($this->wrap)->slugify('_')
-            : 'p'
-        );
-
-        $this->id = (string)S($this->id)->slugify();
-        $this->name = (string)S($this->name)->toAscii()->regexReplace(
-            '[^\w\d\[\]\-\_]',
-            ''
-        );
-        $this->type = (string)S($this->type)->slugify('_');
-        $this->meta = $this->meta ? (array)$this->meta : [];
-        $this->choices = $this->choices ? (array)$this->choices : [];
-
-        $this->layout = (\in_array(
-            $this->layout,
-            ['block', 'inline']
-        ) ? $this->layout : 'inline');
-
-        $this->label_pos = (\in_array(
-            $this->label_pos,
-            ['before_field', 'after_field']
-        ) ? $this->label_pos : 'after_field');
-    }
-
     /**
      * Convert meta to string
      */
     protected function metaString(): string
     {
         $meta_string = '';
-        
+
         if (!$this->meta) {
             return $meta_string;
         }
@@ -410,5 +366,49 @@ class Field
         }
 
         return ($a == $b);
+    }
+
+    private function setAttributes(array $args)
+    {
+        if (!($vars = \get_object_vars($this))) {
+            return;
+        }
+
+        unset($args['meta']['id']);
+        unset($args['meta']['type']);
+        unset($args['meta']['name']);
+        unset($args['meta']['value']);
+
+        foreach ($vars as $key => $value) {
+            $this->$key = $args[$key] ?? '';
+        }
+    }
+
+    private function sanitizeAttributes()
+    {
+        $this->wrap = (
+            $this->wrap
+            ? (string)S($this->wrap)->slugify('_')
+            : 'p'
+        );
+
+        $this->id = (string)S($this->id)->slugify();
+        $this->name = (string)S($this->name)->toAscii()->regexReplace(
+            '[^\w\d\[\]\-\_]',
+            ''
+        );
+        $this->type = (string)S($this->type)->slugify('_');
+        $this->meta = $this->meta ? (array)$this->meta : [];
+        $this->choices = $this->choices ? (array)$this->choices : [];
+
+        $this->layout = (\in_array(
+            $this->layout,
+            ['block', 'inline']
+        ) ? $this->layout : 'inline');
+
+        $this->label_pos = (\in_array(
+            $this->label_pos,
+            ['before_field', 'after_field']
+        ) ? $this->label_pos : 'after_field');
     }
 }
