@@ -106,7 +106,7 @@ class Field
             }
 
             if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout) {
+                if ('block' === $this->layout && $this->label) {
                     $html .= '<br />';
                 }
             }
@@ -121,7 +121,7 @@ class Field
 
         if ('radio' !== $this->type) {
             if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout) {
+                if ('block' === $this->layout && $this->label) {
                     $html .= '<br />';
                 }
             }
