@@ -22,6 +22,7 @@ class FieldTest extends Unit
             'type' => 'text',
             'value' => 'Some text',
             'label' => 'Field label',
+            'labelPos' => 'before_field',
             'wrap' => 'div',
             'meta' => ['class' => 'my-class', 'placeholder' => 'Nothing'],
         ]);

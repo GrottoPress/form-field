@@ -34,9 +34,9 @@ class Field
     protected $label;
 
     /**
-     * @var string $label_pos Label position relative to field
+     * @var string $labelPos Label position relative to field
      */
-    protected $label_pos;
+    protected $labelPos;
 
     /**
      * @var string $layout 'block' or 'inline'
@@ -100,7 +100,7 @@ class Field
         }
 
         if ('radio' !== $this->type &&
-            'before_field' === $this->label_pos &&
+            'before_field' === $this->labelPos &&
             $this->label
         ) {
             $html .= '<label for="'.$this->escape->attr($this->id).'" '.
@@ -121,7 +121,7 @@ class Field
         $html = '';
 
         if ('radio' !== $this->type &&
-            'after_field' === $this->label_pos &&
+            'after_field' === $this->labelPos &&
             $this->label
         ) {
             if ('checkbox' !== $this->type) {
@@ -238,7 +238,7 @@ class Field
         foreach ($this->choices as $value => $label) {
             $id = $this->id.'-'.(string)S($value)->slugify();
 
-            if ('before_field' === $this->label_pos) {
+            if ('before_field' === $this->labelPos) {
                 $html .= '<label for="'.
                     $this->escape->attr($id).'">'.$label.'</label> ';
             }
@@ -249,7 +249,7 @@ class Field
                 '" value="'.$this->escape->attr($value).
                 '" '.$this->checked($value, $this->value).' />';
 
-            if ('after_field' === $this->label_pos) {
+            if ('after_field' === $this->labelPos) {
                 $html .= ' <label for="'.
                     $this->escape->attr($id).'">'.$label.'</label>';
             }
@@ -399,6 +399,7 @@ class Field
             '[^\w\d\[\]\-\_]',
             ''
         );
+
         $this->type = (string)S($this->type)->slugify('_');
         $this->meta = $this->meta ? (array)$this->meta : [];
         $this->choices = $this->choices ? (array)$this->choices : [];
@@ -408,9 +409,9 @@ class Field
             ['block', 'inline']
         ) ? $this->layout : 'inline');
 
-        $this->label_pos = (\in_array(
-            $this->label_pos,
+        $this->labelPos = (\in_array(
+            $this->labelPos,
             ['before_field', 'after_field']
-        ) ? $this->label_pos : 'after_field');
+        ) ? $this->labelPos : 'after_field');
     }
 }
