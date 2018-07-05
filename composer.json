@@ -1,55 +1,55 @@
 {
-    "name": "grottopress/form-field",
-    "description": "Render HTML form fields",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "GrottoPress.com",
-            "email": "info@grottopress.com",
-            "homepage": "https://www.grottopress.com"
-        },
-        {
-          "name": "N Atta Kusi Adusei",
-          "homepage": "https://twitter.com/akadusei",
-          "role": "Developer"
-        }
-    ],
-    "keywords": [
-        "html",
-        "forms"
-    ],
-    "support": {
-        "issues": "https://github.com/GrottoPress/form-field/issues",
-        "wiki": "https://github.com/GrottoPress/form-field/wiki",
-        "source": "https://github.com/GrottoPress/form-field/"
+  "name": "grottopress/form-field",
+  "description": "Render HTML form fields",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "GrottoPress.com",
+      "email": "info@grottopress.com",
+      "homepage": "https://www.grottopress.com"
     },
-    "require": {
-        "php": ">=7.0",
-        "aura/html": "^2.5",
-        "danielstjules/stringy": "^3.1"
-    },
-    "require-dev": {
-        "codeception/codeception": "^2.4"
-    },
-    "autoload": {
-        "psr-4": {
-            "GrottoPress\\Form\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "GrottoPress\\Form\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "chmod +x ./bin/*"
-        ],
-        "test": [
-            "./vendor/bin/codecept run unit"
-        ],
-        "release": [
-            "./bin/release"
-        ]
+    {
+      "name": "N Atta Kusi Adusei",
+      "homepage": "https://twitter.com/akadusei",
+      "role": "Developer"
     }
+  ],
+  "keywords": [
+    "html",
+    "forms"
+  ],
+  "support": {
+    "issues": "https://github.com/GrottoPress/form-field/issues",
+    "wiki": "https://github.com/GrottoPress/form-field/wiki",
+    "source": "https://github.com/GrottoPress/form-field/"
+  },
+  "require": {
+    "php": ">=7.0",
+    "aura/html": "^2.5",
+    "danielstjules/stringy": "^3.1"
+  },
+  "require-dev": {
+    "codeception/codeception": "^2.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "GrottoPress\\Form\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GrottoPress\\Form\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "chmod +x ./bin/*"
+    ],
+    "test": [
+      "./vendor/bin/codecept run unit"
+    ],
+    "release": [
+      "./bin/release"
+    ]
+  }
 }
