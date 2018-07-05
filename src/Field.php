@@ -186,6 +186,16 @@ class Field
     }
 
     /**
+     * Called if $this->type === 'file'
+     */
+    protected function render_file(): string
+    {
+        return '<input type="file" '.$this->metaString().
+            ' id="'.$this->escape->attr($this->id).
+            '" name="'.$this->escape->attr($this->name).'" />';
+    }
+
+    /**
      * Called if $this->type === 'textarea'
      */
     protected function render_textarea(): string

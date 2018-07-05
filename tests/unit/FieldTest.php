@@ -254,6 +254,46 @@ class FieldTest extends Unit
         );
     }
 
+    public function testFileFieldRender()
+    {
+        $field = new Field([
+            'id' => 'field-id',
+            'name' => 'field-name',
+            'type' => 'file',
+            'meta' => [
+                'class' => 'my-class',
+                'accept' => 'image/png, image/jpeg'
+            ],
+        ]);
+
+        $this->dom->loadHTML($field->render());
+        $ps = $this->dom->getElementsByTagName('p');
+        $inputs = $this->dom->getElementsByTagName('input');
+
+        $this->assertCount(1, $ps);
+        $this->assertCount(1, $inputs);
+        $this->assertSame(
+            'field-id',
+            $inputs->item(0)->attributes->getNamedItem('id')->value
+        );
+        $this->assertSame(
+            'field-name',
+            $inputs->item(0)->attributes->getNamedItem('name')->value
+        );
+        $this->assertSame(
+            'file',
+            $inputs->item(0)->attributes->getNamedItem('type')->value
+        );
+        $this->assertSame(
+            'my-class',
+            $inputs->item(0)->attributes->getNamedItem('class')->value
+        );
+        $this->assertSame(
+            'image/png, image/jpeg',
+            $inputs->item(0)->attributes->getNamedItem('accept')->value
+        );
+    }
+
     public function testTextareaFieldRender()
     {
         $field = new Field([
