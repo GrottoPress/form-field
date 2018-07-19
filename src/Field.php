@@ -99,17 +99,20 @@ class Field
             $html .= '<'.$this->wrap.'>';
         }
 
-        if ('radio' !== $this->type &&
-            'before_field' === $this->labelPos &&
-            $this->label
-        ) {
-            $html .= '<label for="'.$this->escape->attr($this->id).'" '.
-                $this->labelIdString().'>'.$this->label.'</label> ';
+        if ('radio' !== $this->type && $this->label) {
+            if ('before_field' === $this->labelPos) {
+                if ($this->id) {
+                    $html .= '<label for="'.$this->escape->attr($this->id).'" '.
+                        $this->labelIdString().'>'.$this->label.'</label>';
+                } else {
+                    $html .= '<label>'.$this->label;
+                }
 
-            if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout) {
+                if ('checkbox' !== $this->type && 'block' === $this->layout) {
                     $html .= '<br />';
                 }
+            } elseif (!$this->id) {
+                $html .= '<label>';
             }
         }
 
@@ -120,18 +123,21 @@ class Field
     {
         $html = '';
 
-        if ('radio' !== $this->type &&
-            'after_field' === $this->labelPos &&
-            $this->label
-        ) {
-            if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout) {
+        if ('radio' !== $this->type && $this->label) {
+            if ('before_field' !== $this->labelPos) {
+                if ('checkbox' !== $this->type && 'block' === $this->layout) {
                     $html .= '<br />';
                 }
-            }
 
-            $html .= ' <label for="'.$this->escape->attr($this->id).'" '.
-                $this->labelIdString().'>'.$this->label.'</label>';
+                if ($this->id) {
+                    $html .= '<label for="'.$this->escape->attr($this->id).'"'.
+                        $this->labelIdString().'>'.$this->label.'</label>';
+                } else {
+                    $html .= $this->label.'</label>';
+                }
+            } elseif (!$this->id) {
+                $html .= '</label>';
+            }
         }
 
         if ($this->wrap) {

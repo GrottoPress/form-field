@@ -73,10 +73,11 @@ class FieldTest extends Unit
     public function testEmailFieldRender()
     {
         $field = new Field([
-            'id' => 'field-id',
+            'id' => '',
             'name' => 'field-name',
             'type' => 'email',
-            'value' => 'info@grottopress.com',
+            'label' => 'Field label',
+            'value' => 'a@b.c',
             'meta' => ['class' => 'my-class', 'placeholder' => 'Nothing'],
         ]);
 
@@ -87,9 +88,9 @@ class FieldTest extends Unit
 
         $this->assertCount(1, $ps);
         $this->assertCount(1, $inputs);
-        $this->assertCount(0, $labels);
+        $this->assertCount(1, $labels);
         $this->assertSame(
-            'field-id',
+            '',
             $inputs->item(0)->attributes->getNamedItem('id')->value
         );
         $this->assertSame(
@@ -101,7 +102,7 @@ class FieldTest extends Unit
             $inputs->item(0)->attributes->getNamedItem('type')->value
         );
         $this->assertSame(
-            'info@grottopress.com',
+            'a@b.c',
             $inputs->item(0)->attributes->getNamedItem('value')->value
         );
         $this->assertSame(
@@ -111,6 +112,11 @@ class FieldTest extends Unit
         $this->assertSame(
             'Nothing',
             $inputs->item(0)->attributes->getNamedItem('placeholder')->value
+        );
+        $this->assertSame(
+            'Field label',
+            $labels->item(0)->childNodes->item(1)->ownerDocument
+                ->saveHTML($labels->item(0)->childNodes->item(1))
         );
     }
 
