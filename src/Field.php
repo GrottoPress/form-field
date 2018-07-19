@@ -4,7 +4,7 @@ declare (strict_types = 1);
 namespace GrottoPress\Form;
 
 use Aura\Html\HelperLocatorFactory as Helper;
-use function Stringy\create as S;
+use function Stringy\create as s;
 
 class Field
 {
@@ -246,7 +246,7 @@ class Field
         }
 
         foreach ($this->choices as $value => $label) {
-            $id = $this->id.'-'.(string)S($value)->slugify();
+            $id = $this->id.'-'.(string)s($value)->slugify();
 
             if ('before_field' === $this->labelPos) {
                 $html .= '<label for="'.
@@ -317,7 +317,7 @@ class Field
             string $value,
             string $key
         ) use (&$meta_string) {
-            $meta_string .= (string)S($key)->slugify().
+            $meta_string .= (string)s($key)->slugify().
                 '="'.$this->escape->attr($value).'" ';
         });
 
@@ -398,17 +398,17 @@ class Field
     {
         $this->wrap = (
             $this->wrap
-            ? (string)S($this->wrap)->slugify('_')
+            ? (string)s($this->wrap)->slugify('_')
             : 'p'
         );
 
-        $this->id = (string)S($this->id)->slugify();
-        $this->name = (string)S($this->name)->toAscii()->regexReplace(
+        $this->id = (string)s($this->id)->slugify();
+        $this->name = (string)s($this->name)->toAscii()->regexReplace(
             '[^\w\d\[\]\-\_]',
             ''
         );
 
-        $this->type = (string)S($this->type)->slugify('_');
+        $this->type = (string)s($this->type)->slugify('_');
         $this->meta = $this->meta ? (array)$this->meta : [];
         $this->choices = $this->choices ? (array)$this->choices : [];
 
