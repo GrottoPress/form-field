@@ -4,7 +4,7 @@ declare (strict_types = 1);
 namespace GrottoPress\Form;
 
 use Aura\Html\HelperLocatorFactory as Helper;
-use function Stringy\create as S;
+use function Stringy\create as s;
 
 class Field
 {
@@ -99,17 +99,20 @@ class Field
             $html .= '<'.$this->wrap.'>';
         }
 
-        if ('radio' !== $this->type &&
-            'before_field' === $this->labelPos &&
-            $this->label
-        ) {
-            $html .= '<label for="'.$this->escape->attr($this->id).'" '.
-                $this->labelIdString().'>'.$this->label.'</label> ';
+        if ('radio' !== $this->type && $this->label) {
+            if ('before_field' === $this->labelPos) {
+                if ($this->id) {
+                    $html .= '<label for="'.$this->escape->attr($this->id).'" '.
+                        $this->labelIdString().'>'.$this->label.'</label>';
+                } else {
+                    $html .= '<label>'.$this->label;
+                }
 
-            if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout) {
+                if ('checkbox' !== $this->type && 'block' === $this->layout) {
                     $html .= '<br />';
                 }
+            } elseif (!$this->id) {
+                $html .= '<label>';
             }
         }
 
@@ -120,18 +123,21 @@ class Field
     {
         $html = '';
 
-        if ('radio' !== $this->type &&
-            'after_field' === $this->labelPos &&
-            $this->label
-        ) {
-            if ('checkbox' !== $this->type) {
-                if ('block' === $this->layout) {
+        if ('radio' !== $this->type && $this->label) {
+            if ('before_field' !== $this->labelPos) {
+                if ('checkbox' !== $this->type && 'block' === $this->layout) {
                     $html .= '<br />';
                 }
-            }
 
-            $html .= ' <label for="'.$this->escape->attr($this->id).'" '.
-                $this->labelIdString().'>'.$this->label.'</label>';
+                if ($this->id) {
+                    $html .= '<label for="'.$this->escape->attr($this->id).'"'.
+                        $this->labelIdString().'>'.$this->label.'</label>';
+                } else {
+                    $html .= $this->label.'</label>';
+                }
+            } elseif (!$this->id) {
+                $html .= '</label>';
+            }
         }
 
         if ($this->wrap) {
@@ -246,7 +252,7 @@ class Field
         }
 
         foreach ($this->choices as $value => $label) {
-            $id = $this->id.'-'.(string)S($value)->slugify();
+            $id = $this->id.'-'.(string)s($value)->slugify();
 
             if ('before_field' === $this->labelPos) {
                 $html .= '<label for="'.
@@ -317,7 +323,7 @@ class Field
             string $value,
             string $key
         ) use (&$meta_string) {
-            $meta_string .= (string)S($key)->slugify().
+            $meta_string .= (string)s($key)->slugify().
                 '="'.$this->escape->attr($value).'" ';
         });
 
@@ -326,11 +332,7 @@ class Field
 
     protected function labelIdString(): string
     {
-        if (!$this->id) {
-            return '';
-        }
-
-        return 'id="'.$this->id.'-label"';
+        return ($this->id ? 'id="'.$this->id.'-label"' : '');
     }
 
     /**
@@ -386,13 +388,15 @@ class Field
             return;
         }
 
+        unset($vars['escape']);
+
         unset($args['meta']['id']);
         unset($args['meta']['type']);
         unset($args['meta']['name']);
         unset($args['meta']['value']);
 
         foreach ($vars as $key => $value) {
-            $this->$key = $args[$key] ?? '';
+            $this->$key = $args[$key] ?? null;
         }
     }
 
@@ -400,17 +404,17 @@ class Field
     {
         $this->wrap = (
             $this->wrap
-            ? (string)S($this->wrap)->slugify('_')
+            ? (string)s($this->wrap)->slugify('_')
             : 'p'
         );
 
-        $this->id = (string)S($this->id)->slugify();
-        $this->name = (string)S($this->name)->toAscii()->regexReplace(
+        $this->id = (string)s($this->id)->slugify();
+        $this->name = (string)s($this->name)->toAscii()->regexReplace(
             '[^\w\d\[\]\-\_]',
             ''
         );
 
-        $this->type = (string)S($this->type)->slugify('_');
+        $this->type = (string)s($this->type)->slugify('_');
         $this->meta = $this->meta ? (array)$this->meta : [];
         $this->choices = $this->choices ? (array)$this->choices : [];
 
