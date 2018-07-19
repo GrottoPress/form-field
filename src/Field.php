@@ -326,11 +326,7 @@ class Field
 
     protected function labelIdString(): string
     {
-        if (!$this->id) {
-            return '';
-        }
-
-        return 'id="'.$this->id.'-label"';
+        return ($this->id ? 'id="'.$this->id.'-label"' : '');
     }
 
     /**
@@ -386,13 +382,15 @@ class Field
             return;
         }
 
+        unset($vars['escape']);
+
         unset($args['meta']['id']);
         unset($args['meta']['type']);
         unset($args['meta']['name']);
         unset($args['meta']['value']);
 
         foreach ($vars as $key => $value) {
-            $this->$key = $args[$key] ?? '';
+            $this->$key = $args[$key] ?? null;
         }
     }
 
