@@ -313,21 +313,13 @@ class Field
      */
     protected function metaString(): string
     {
-        $meta_string = '';
-
         if (!$this->meta) {
-            return $meta_string;
+            return '';
         }
 
-        \array_walk($this->meta, function (
-            string $value,
-            string $key
-        ) use (&$meta_string) {
-            $meta_string .= (string)s($key)->slugify().
-                '="'.$this->escape->attr($value).'" ';
-        });
-
-        return trim($meta_string);
+        return \join(' ', \array_map(function (string $key, $value): string {
+            return (string)s($key)->slugify().'="'.$this->escape->attr($value).'"';
+        }, \array_keys($this->meta), \array_values($this->meta)));
     }
 
     protected function labelIdString(): string
