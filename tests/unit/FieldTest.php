@@ -317,11 +317,11 @@ class FieldTest extends Unit
         $this->assertCount(1, $ps);
         $this->assertCount(1, $textareas);
         $this->assertSame(
-            'field-id',
+            'f-ield-id',
             $textareas->item(0)->attributes->getNamedItem('id')->value
         );
         $this->assertSame(
-            'field-name',
+            'field---name',
             $textareas->item(0)->attributes->getNamedItem('name')->value
         );
         $this->assertSame(
