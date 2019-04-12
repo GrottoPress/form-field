@@ -4,7 +4,6 @@ declare (strict_types = 1);
 namespace GrottoPress\Form;
 
 use Aura\Html\HelperLocatorFactory as Helper;
-use function Stringy\create as s;
 
 class Field
 {
@@ -252,7 +251,7 @@ class Field
         }
 
         foreach ($this->choices as $value => $label) {
-            $id = $this->id.'-'.(string)s($value)->slugify();
+            $id = $this->id.'-'.$this->slugify($value);
 
             if ('before_field' === $this->labelPos) {
                 $html .= '<label for="'.
@@ -318,7 +317,7 @@ class Field
         }
 
         return \join(' ', \array_map(function (string $key, $value): string {
-            return (string)s($key)->slugify().'="'.$this->escape->attr($value).'"';
+            return $this->slugify($key).'="'.$this->escape->attr($value).'"';
         }, \array_keys($this->meta), \array_values($this->meta)));
     }
 
@@ -394,19 +393,11 @@ class Field
 
     private function sanitizeAttributes()
     {
-        $this->wrap = (
-            $this->wrap
-            ? (string)s($this->wrap)->slugify('_')
-            : 'p'
-        );
+        $this->wrap = $this->wrap ? $this->slugify($this->wrap, '_') : 'p';
+        $this->id = $this->slugify($this->id);
+        $this->name = $this->slugify($this->name, '-', '[]');
 
-        $this->id = (string)s($this->id)->slugify();
-        $this->name = (string)s($this->name)->toAscii()->regexReplace(
-            '[^\w\d\[\]\-\_]',
-            ''
-        );
-
-        $this->type = (string)s($this->type)->slugify('_');
+        $this->type = $this->slugify($this->type, '_');
         $this->meta = $this->meta ? (array)$this->meta : [];
         $this->choices = $this->choices ? (array)$this->choices : [];
 
@@ -419,5 +410,20 @@ class Field
             $this->labelPos,
             ['before_field', 'after_field']
         ) ? $this->labelPos : 'after_field');
+    }
+
+    private function slugify(
+        string $string,
+        string $replace = '-',
+        string $exempt = ''
+    ): string {
+        $replace = \in_array($replace, ['-', '_', '']) ? $replace : '-';
+        $exempt = \preg_quote($exempt, '/');
+
+        return \trim(\preg_replace(
+            "/[^a-z\d\-\_$exempt]/",
+            $replace,
+            \strtolower($string)
+        ), " -_\t\n\r\0\x0B");
     }
 }
