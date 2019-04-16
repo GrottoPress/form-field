@@ -394,10 +394,10 @@ class Field
     private function sanitizeAttributes()
     {
         $this->wrap = $this->wrap ? $this->slugify($this->wrap, '_') : 'p';
-        $this->id = $this->slugify($this->id);
-        $this->name = $this->slugify($this->name, '-', '[]');
+        $this->id = $this->slugify((string)$this->id);
+        $this->name = $this->slugify((string)$this->name, '-', '[]');
 
-        $this->type = $this->slugify($this->type, '_');
+        $this->type = $this->slugify((string)$this->type, '_');
         $this->meta = $this->meta ? (array)$this->meta : [];
         $this->choices = $this->choices ? (array)$this->choices : [];
 
@@ -417,8 +417,12 @@ class Field
         string $replace = '-',
         string $exempt = ''
     ): string {
+        if (!$string) {
+            return $string;
+        }
+
         $replace = \in_array($replace, ['-', '_', '']) ? $replace : '-';
-        $exempt = \preg_quote($exempt, '/');
+        $exempt = $exempt ? \preg_quote($exempt, '/') : '';
 
         return \trim(\preg_replace(
             "/[^a-z\d\-\_$exempt]/",
