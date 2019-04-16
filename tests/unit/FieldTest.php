@@ -552,7 +552,6 @@ class FieldTest extends Unit
     public function testSubmitButtonRender()
     {
         $field = new Field([
-            'id' => 'field-id',
             'name' => 'field-name',
             'type' => 'submit',
             'value' => 'Save',
@@ -566,7 +565,7 @@ class FieldTest extends Unit
         $this->assertCount(1, $ps);
         $this->assertCount(1, $buttons);
         $this->assertSame(
-            'field-id',
+            '',
             $buttons->item(0)->attributes->getNamedItem('id')->value
         );
         $this->assertSame(
