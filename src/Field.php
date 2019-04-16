@@ -417,8 +417,12 @@ class Field
         string $replace = '-',
         string $exempt = ''
     ): string {
+        if (!$string) {
+            return $string;
+        }
+
         $replace = \in_array($replace, ['-', '_', '']) ? $replace : '-';
-        $exempt = \preg_quote($exempt, '/');
+        $exempt = $exempt ? \preg_quote($exempt, '/') : '';
 
         return \trim(\preg_replace(
             "/[^a-z\d\-\_$exempt]/",
