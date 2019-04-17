@@ -1,5 +1,7 @@
 /** export-ignore
 /src -export-ignore
 /src/** -export-ignore
-/LICENSE -export-ignore
 /.security.txt -export-ignore
+/composer.json -export-ignore
+/composer.lock -export-ignore
+/LICENSE -export-ignore
