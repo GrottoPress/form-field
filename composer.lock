@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae51d589b5146683fb770a997f745a71",
+    "content-hash": "98655abefc714e1f12ddc89970fb8bdd",
     "packages": [
         {
             "name": "aura/html",
@@ -66,6 +66,55 @@
                 "input"
             ],
             "time": "2017-07-21T06:56:56+00:00"
+        },
+        {
+            "name": "grottopress/getter",
+            "version": "0.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrottoPress/getter.git",
+                "reference": "d5ce48577fc8f32618a337ca7316d23816fa1db0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrottoPress/getter/zipball/d5ce48577fc8f32618a337ca7316d23816fa1db0",
+                "reference": "d5ce48577fc8f32618a337ca7316d23816fa1db0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GrottoPress\\Getter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "GrottoPress.com",
+                    "email": "info@grottopress.com",
+                    "homepage": "https://www.grottopress.com"
+                },
+                {
+                    "name": "N Atta Kusi Adusei",
+                    "homepage": "https://twitter.com/akadusei",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Get private object attributes directly, without calling getter methods.",
+            "keywords": [
+                "OOP",
+                "getter"
+            ],
+            "time": "2019-04-17T14:55:52+00:00"
         }
     ],
     "packages-dev": [

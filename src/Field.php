@@ -3,10 +3,13 @@ declare (strict_types = 1);
 
 namespace GrottoPress\Form;
 
+use GrottoPress\Getter\GetterTrait;
 use Aura\Html\HelperLocatorFactory as Helper;
 
 class Field
 {
+    use GetterTrait;
+
     /**
      * @var string $wrap Wrapper HTML tag.
      */
@@ -77,6 +80,59 @@ class Field
         $this->sanitizeAttributes();
 
         $this->escape = (new Helper())->newInstance()->escape();
+    }
+
+    protected function getWrap(): string
+    {
+        return $this->wrap;
+    }
+
+    protected function getID(): string
+    {
+        return $this->id;
+    }
+
+    protected function getName(): string
+    {
+        return $this->name;
+    }
+
+    protected function getType(): string
+    {
+        return $this->type;
+    }
+
+    protected function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    protected function getLabelPos(): string
+    {
+        return $this->labelPos;
+    }
+
+    protected function getLayout(): string
+    {
+        return $this->layout;
+    }
+
+    protected function getChoices(): array
+    {
+        return $this->choices;
+    }
+
+    protected function getMeta(): array
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getValue()
+    {
+        return $this->value;
     }
 
     public function render(): string
