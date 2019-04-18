@@ -428,6 +428,6 @@ class Field
             "/[^a-z\d\-\_$exempt]/",
             $replace,
             \strtolower($string)
-        ), " -_\t\n\r\0\x0B");
+        ), " -\t\n\r\0\x0B");
     }
 }
