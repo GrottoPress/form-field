@@ -18,7 +18,7 @@ class FieldTest extends Unit
     {
         $field = new Field([
             'id' => 'field-id',
-            'name' => 'field-name',
+            'name' => '_field-name_',
             'type' => 'text',
             'value' => 'Some text',
             'label' => 'Field label',
@@ -40,7 +40,7 @@ class FieldTest extends Unit
             $inputs->item(0)->attributes->getNamedItem('id')->value
         );
         $this->assertSame(
-            'field-name',
+            '_field-name_',
             $inputs->item(0)->attributes->getNamedItem('name')->value
         );
         $this->assertSame(
