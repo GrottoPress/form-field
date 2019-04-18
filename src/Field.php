@@ -66,7 +66,7 @@ class Field
      *
      * @var \Aura\Html\Escaper
      */
-    private $escape;
+    protected $escape;
 
     /**
      * @param array $args Field arguments supplied as associative array
@@ -373,7 +373,7 @@ class Field
         return ($a == $b);
     }
 
-    private function setAttributes(array $args)
+    protected function setAttributes(array $args)
     {
         if (!($vars = \get_object_vars($this))) {
             return;
@@ -391,7 +391,7 @@ class Field
         }
     }
 
-    private function sanitizeAttributes()
+    protected function sanitizeAttributes()
     {
         $this->wrap = $this->wrap ? $this->slugify($this->wrap, '_') : 'p';
         $this->id = $this->slugify((string)$this->id);
@@ -412,7 +412,7 @@ class Field
         ) ? $this->labelPos : 'after_field');
     }
 
-    private function slugify(
+    protected function slugify(
         string $string,
         string $replace = '-',
         string $exempt = ''
