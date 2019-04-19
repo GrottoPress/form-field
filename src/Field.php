@@ -457,6 +457,9 @@ class Field
         $this->meta = $this->meta ? (array)$this->meta : [];
         $this->choices = $this->choices ? (array)$this->choices : [];
 
+        $this->label = $this->label ?: '';
+        $this->value = $this->value ?: '';
+
         $this->layout = (\in_array(
             $this->layout,
             ['block', 'inline']
