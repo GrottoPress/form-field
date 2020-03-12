@@ -4,7 +4,7 @@ declare (strict_types = 1);
 namespace GrottoPress\Form;
 
 use GrottoPress\Getter\GetterTrait;
-use Aura\Html\HelperLocatorFactory as Helper;
+use Laminas\Escaper\Escaper;
 
 class Field
 {
@@ -67,9 +67,9 @@ class Field
     /**
      * HTML Escaper
      *
-     * @var \Aura\Html\Escaper
+     * @var Escaper
      */
-    protected $escape;
+    protected $escaper;
 
     /**
      * @param array $args Field arguments supplied as associative array
@@ -79,7 +79,7 @@ class Field
         $this->setAttributes($args);
         $this->sanitizeAttributes();
 
-        $this->escape = (new Helper())->newInstance()->escape();
+        $this->escaper = new Escaper('utf-8');
     }
 
     protected function getWrap(): string
@@ -157,7 +157,8 @@ class Field
         if ('radio' !== $this->type && $this->label) {
             if ('before_field' === $this->labelPos) {
                 if ($this->id) {
-                    $html .= '<label for="'.$this->escape->attr($this->id).'" '.
+                    $html .= '<label for="'.
+                        $this->escapeHtmlAttr($this->id).'" '.
                         $this->labelIdString().'>'.$this->label.'</label>';
                 } else {
                     $html .= '<label>'.$this->label;
@@ -185,7 +186,8 @@ class Field
                 }
 
                 if ($this->id) {
-                    $html .= '<label for="'.$this->escape->attr($this->id).'"'.
+                    $html .= '<label for="'.
+                        $this->escapeHtmlAttr($this->id).'"'.
                         $this->labelIdString().'>'.$this->label.'</label>';
                 } else {
                     $html .= $this->label.'</label>';
@@ -208,9 +210,9 @@ class Field
     protected function render_text(): string
     {
         return '<input type="text" '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).
-            '" value="'.$this->escape->attr($this->value).'" />';
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).
+            '" value="'.$this->escapeHtmlAttr($this->value).'" />';
     }
 
     /**
@@ -219,9 +221,9 @@ class Field
     protected function render_email(): string
     {
         return '<input type="email" '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).
-            '" value="'.$this->escape->attr($this->value).'" />';
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).
+            '" value="'.$this->escapeHtmlAttr($this->value).'" />';
     }
 
     /**
@@ -230,9 +232,9 @@ class Field
     protected function render_number(): string
     {
         return '<input type="number" '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).
-            '" value="'.$this->escape->attr($this->value).'" />';
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).
+            '" value="'.$this->escapeHtmlAttr($this->value).'" />';
     }
 
     /**
@@ -241,9 +243,9 @@ class Field
     protected function render_url(): string
     {
         return '<input type="text" '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).
-            '" value="'.$this->escape->attr($this->value).'" />';
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).
+            '" value="'.$this->escapeHtmlAttr($this->value).'" />';
     }
 
     /**
@@ -252,8 +254,8 @@ class Field
     protected function render_file(): string
     {
         return '<input type="file" '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).'" />';
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).'" />';
     }
 
     /**
@@ -262,9 +264,9 @@ class Field
     protected function render_textarea(): string
     {
         return '<textarea '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).'">'.
-            $this->escape->attr($this->value).'</textarea>';
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).'">'.
+            $this->escapeHtmlAttr($this->value).'</textarea>';
     }
 
     /**
@@ -273,8 +275,8 @@ class Field
     protected function render_checkbox(): string
     {
         return '<input type="checkbox" '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).
             '" value="1" '.$this->checked(1, $this->value).' />';
     }
 
@@ -284,9 +286,9 @@ class Field
     protected function render_submit(): string
     {
         return '<button type="submit" '.$this->metaString().
-            ' id="'.$this->escape->attr($this->id).
-            '" name="'.$this->escape->attr($this->name).'">'.
-            $this->escape->attr($this->value).
+            ' id="'.$this->escapeHtmlAttr($this->id).
+            '" name="'.$this->escapeHtmlAttr($this->name).'">'.
+            $this->escapeHtmlAttr($this->value).
         '</button>';
     }
 
@@ -298,7 +300,7 @@ class Field
         $html = '';
 
         if ($this->label) {
-            $html .= '<label for="'.$this->escape->attr($this->id).
+            $html .= '<label for="'.$this->escapeHtmlAttr($this->id).
                 '" '.$this->labelIdString().'>'.$this->label.'</label><br />';
         }
 
@@ -310,19 +312,20 @@ class Field
             $id = $this->id.'-'.$this->slugify($value);
 
             if ('before_field' === $this->labelPos) {
-                $html .= '<label for="'.
-                    $this->escape->attr($id).'">'.$label.'</label> ';
+                $html .= '<label for="'.$this->escapeHtmlAttr($id).'">'.
+                    $label.
+                '</label> ';
             }
 
             $html .= '<input type="radio" '.$this->metaString().
-                ' id="'.$this->escape->attr($id).
-                '" name="'.$this->escape->attr($this->name).
-                '" value="'.$this->escape->attr($value).
+                ' id="'.$this->escapeHtmlAttr($id).
+                '" name="'.$this->escapeHtmlAttr($this->name).
+                '" value="'.$this->escapeHtmlAttr($value).
                 '" '.$this->checked($value, $this->value).' />';
 
             if ('after_field' === $this->labelPos) {
                 $html .= ' <label for="'.
-                    $this->escape->attr($id).'">'.$label.'</label>';
+                    $this->escapeHtmlAttr($id).'">'.$label.'</label>';
             }
 
             $html .= '<br />';
@@ -341,8 +344,8 @@ class Field
         }
 
         $html = '<select '.$this->metaString().' id="'.
-            $this->escape->attr($this->id).'" name="'.
-            $this->escape->attr($this->name).'">';
+            $this->escapeHtmlAttr($this->id).'" name="'.
+            $this->escapeHtmlAttr($this->name).'">';
 
         foreach ($this->choices as $value => $label) {
             if (isset($this->meta['multiple'])) {
@@ -355,7 +358,7 @@ class Field
             }
 
             $html .= '<option '.$selected.' value="'.
-                $this->escape->attr($value).'">'.$label.'</option>';
+                $this->escapeHtmlAttr($value).'">'.$label.'</option>';
         }
 
         $html .= '</select>';
@@ -373,7 +376,8 @@ class Field
         }
 
         return \join(' ', \array_map(function (string $key, $value): string {
-            return $this->slugify($key).'="'.$this->escape->attr($value).'"';
+            return $this->slugify($key).'="'.
+                $this->escapeHtmlAttr($value).'"';
         }, \array_keys($this->meta), \array_values($this->meta)));
     }
 
@@ -435,7 +439,7 @@ class Field
             return;
         }
 
-        unset($vars['escape']);
+        unset($vars['escaper']);
 
         unset($args['meta']['id']);
         unset($args['meta']['type']);
@@ -488,5 +492,10 @@ class Field
             $replace,
             \strtolower($string)
         ), " -\t\n\r\0\x0B");
+    }
+
+    protected function escapeHtmlAttr($value): string
+    {
+        return $this->escaper->escapeHtmlAttr($value);
     }
 }
