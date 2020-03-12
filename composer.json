@@ -29,7 +29,8 @@
     "laminas/laminas-escaper": "^2.6"
   },
   "require-dev": {
-    "codeception/codeception": "^2.4"
+    "codeception/codeception": "^4.1",
+    "codeception/module-asserts": "^1.1"
   },
   "autoload": {
     "psr-4": {

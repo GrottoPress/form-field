@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Replace "aura/html" package with "laminas/laminas-escaper"
+- Update codeception to version 4.1
 
 ## [0.6.11] - 2020-02-08
 
