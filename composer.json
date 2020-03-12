@@ -25,8 +25,7 @@
   },
   "require": {
     "php": ">=7.0",
-    "aura/html": "^2.5",
-    "grottopress/getter": "^0.3.7"
+    "grottopress/getter": "^0.3"
   },
   "require-dev": {
     "codeception/codeception": "^2.4"
