@@ -25,7 +25,7 @@
   },
   "require": {
     "php": ">=7.0",
-    "grottopress/getter": "^0.3",
+    "grottopress/getter": "^0.4",
     "laminas/laminas-escaper": "^2.6"
   },
   "require-dev": {
