@@ -496,6 +496,6 @@ class Field
 
     protected function escapeHtmlAttr($value): string
     {
-        return $this->escaper->escapeHtmlAttr($value);
+        return $this->escaper->escapeHtmlAttr("$value");
     }
 }

@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Replace Travis CI with GitHub actions
 
+### Fixed
+- Fix `TypeError` in `Laminas\Escaper\Escaper::escapeHtmlAttr()` calls
+
 ## [0.6.12] - 2020-02-12
 
 ### Changed
